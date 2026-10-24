@@ -37,31 +37,36 @@ The entire flow — from RTL design through synthesis, physical design, and timi
                      32-bit Instruction
                               │
                               ▼
-                  +----------------------+
-                  | Instruction Decoder  |
-                  +----------------------+
-                    │      │      │
-                  rs1     rs2     rd
-                    │      │      │
-                    ▼      ▼      ▼
-              +----------------------+
-              |   Register File      |
-              |      32 × 32         |
-              +----------------------+
-                  │            │
-                  ▼            ▼
-               Operand A   Operand B
-                    \        /
-                     \      /
-                      ▼    ▼
-                  +------------+
-                  |    ALU     |
-                  +------------+
+                  ┌──────────────────────┐
+                  │  Instruction Decoder │  ◄── Purple
+                  │  Opcode·rs1·rs2·rd   │
+                  └──────────────────────┘
+                    │        │        │
+                   rs1      rs2       rd
+                    │        │        │
+                    ▼        ▼        ▼
+              ┌──────────────────────────┐
+              │      Register File       │  ◄── Teal
+              │        32 × 32           │
+              └──────────────────────────┘
+                   │              │
+                   ▼              ▼
+               Operand A      Operand B
+                    \            /
+                     \          /
+                      ▼        ▼
+                  ┌────────────┐
+                  │    ALU     │  ◄── Coral
+                  │  32-bit    │
+                  └────────────┘
                         │
                    ALU Result
                         │
                         ▼
-                Register File
+              ┌──────────────────────────┐
+              │  Register File Writeback │  ◄── Teal
+              │       Result → rd        │
+              └──────────────────────────┘
 ```
 
 ---
