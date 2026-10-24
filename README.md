@@ -33,40 +33,8 @@ The entire flow — from RTL design through synthesis, physical design, and timi
 
 ## 🏗 Architecture
 
-```
-                     32-bit Instruction
-                              │
-                              ▼
-                  ┌──────────────────────┐
-                  │  Instruction Decoder │  ◄── Purple
-                  │  Opcode·rs1·rs2·rd   │
-                  └──────────────────────┘
-                    │        │        │
-                   rs1      rs2       rd
-                    │        │        │
-                    ▼        ▼        ▼
-              ┌──────────────────────────┐
-              │      Register File       │  ◄── Teal
-              │        32 × 32           │
-              └──────────────────────────┘
-                   │              │
-                   ▼              ▼
-               Operand A      Operand B
-                    \            /
-                     \          /
-                      ▼        ▼
-                  ┌────────────┐
-                  │    ALU     │  ◄── Coral
-                  │  32-bit    │
-                  └────────────┘
-                        │
-                   ALU Result
-                        │
-                        ▼
-              ┌──────────────────────────┐
-              │  Register File Writeback │  ◄── Teal
-              │       Result → rd        │
-              └──────────────────────────┘
+![Architecture Diagram](images/architecture.svg)   
+
 ```
 
 ---
