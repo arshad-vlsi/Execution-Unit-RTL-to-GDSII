@@ -33,12 +33,13 @@ The entire flow — from RTL design through synthesis, physical design, and timi
 
 ## 🏗 Architecture
 
-![Architecture Diagram](images/architecture.svg)   
+![Architecture Diagram](images/architecture.svg)
 
 ---
 
 ## 📁 Directory Structure
 
+```
 Execution-Unit-RTL-to-GDSII/
 │
 ├── rtl/
@@ -71,6 +72,7 @@ Execution-Unit-RTL-to-GDSII/
 ├── README.md
 ├── LICENSE
 └── .gitignore
+```
 
 ---
 
@@ -108,6 +110,7 @@ Execution-Unit-RTL-to-GDSII/
 
 ## 🗺 Development Roadmap
 
+```
 Phase 1 — RTL Design
   ├── defines.vh
   ├── instruction_decoder.v
@@ -133,6 +136,7 @@ Phase 5 — Signoff
   ├── STA
   ├── Timing Closure
   └── Final GDSII
+```
 
 ---
 
@@ -154,3 +158,4 @@ This project is licensed under the MIT License — see [LICENSE](LICENSE) for de
 M.Tech ECE (VLSI Design) — NIT Hamirpur
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-arshadansari04-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/arshadansari04/)
 [![GitHub](https://img.shields.io/badge/GitHub-arshad04022002-181717?style=flat-square&logo=github)](https://github.com/arshad04022002)
+  
