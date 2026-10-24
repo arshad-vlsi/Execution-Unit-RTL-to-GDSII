@@ -35,10 +35,10 @@ The entire flow — from RTL design through synthesis, physical design, and timi
 
 ![Architecture Diagram](images/architecture.svg)   
 
+---
 
 ## 📁 Directory Structure
 
-```
 Execution-Unit-RTL-to-GDSII/
 │
 ├── rtl/
