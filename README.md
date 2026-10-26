@@ -18,6 +18,14 @@ The entire flow — from RTL design through synthesis, physical design, and timi
 
 ---
 
+## 🆕 Latest Progress
+
+> **Day 2 — Instruction Decoder RTL Complete**
+>
+> The Instruction Decoder module has been implemented in synthesizable Verilog HDL and functionally verified using **Cadence Xcelium / SimVision**. All output fields — opcode, rd, rs1, rs2 — were verified correct across multiple instruction vectors. The Register File RTL is now in progress.
+
+---
+
 ## ✨ Features
 
 - 32-bit instruction decoding
@@ -44,8 +52,8 @@ Execution-Unit-RTL-to-GDSII/
 │
 ├── rtl/
 │   ├── defines.vh                  ← Global definitions
-│   ├── instruction_decoder.v       ← Instruction Decoder
-│   ├── register_file.v             ← 32×32 Register File
+│   ├── instruction_decoder.v       ← Instruction Decoder ✅
+│   ├── register_file.v             ← 32×32 Register File 🔄
 │   ├── alu.v                       ← 32-bit ALU
 │   └── execution_unit_top.v        ← Top Module
 │
@@ -67,7 +75,8 @@ Execution-Unit-RTL-to-GDSII/
 │   ├── Project_Plan.md
 │   ├── Architecture.md
 │   ├── Instruction_Set.md
-│   └── Progress_Log.md
+│   ├── Progress_Log.md
+│   └── Day02_Update.md
 │
 ├── README.md
 ├── LICENSE
@@ -96,8 +105,8 @@ Execution-Unit-RTL-to-GDSII/
 | Repository Initialization | ✅ Complete |
 | Folder Structure | ✅ Complete |
 | Project Specification | ✅ Complete |
-| Instruction Decoder RTL | 🔜 Upcoming |
-| Register File RTL | 🔜 Upcoming |
+| Instruction Decoder RTL | ✅ Complete |
+| Register File RTL | 🔄 In Progress |
 | ALU RTL | 🔜 Upcoming |
 | Top Module | 🔜 Upcoming |
 | Verification / Testbench | 🔜 Upcoming |
@@ -112,14 +121,14 @@ Execution-Unit-RTL-to-GDSII/
 
 ```
 Phase 1 — RTL Design
-  ├── defines.vh
-  ├── instruction_decoder.v
-  ├── register_file.v
-  ├── alu.v
-  └── execution_unit_top.v
+  ├── defines.vh                ✅ Complete
+  ├── instruction_decoder.v     ✅ Complete — verified with Xcelium
+  ├── register_file.v           🔄 In Progress
+  ├── alu.v                     🔜 Upcoming
+  └── execution_unit_top.v      🔜 Upcoming
 
 Phase 2 — Verification
-  └── execution_unit_tb.v
+  └── execution_unit_tb.v       🔜 Upcoming
 
 Phase 3 — Synthesis (Cadence Genus)
   ├── genus.tcl
@@ -157,5 +166,5 @@ This project is licensed under the MIT License — see [LICENSE](LICENSE) for de
 **Arshad Ansari**
 M.Tech ECE (VLSI Design) — NIT Hamirpur
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-arshadansari04-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/arshadansari04/)
-[![GitHub](https://img.shields.io/badge/GitHub-arshad04022002-181717?style=flat-square&logo=github)](https://github.com/arshad04022002)
-  
+[![GitHub](https://img.shields.io/badge/GitHub-arshad--vlsi-181717?style=flat-square&logo=github)](https://github.com/arshad-vlsi)
+    
