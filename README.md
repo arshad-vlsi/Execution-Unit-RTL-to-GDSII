@@ -21,16 +21,17 @@ The entire flow — from RTL design through synthesis, physical design, and timi
 
 ## 🆕 Latest Progress
 
-> **Day 2 — Instruction Decoder RTL Complete**
+> **Day 3 — Register File RTL Complete**
 >
-> The Instruction Decoder module has been implemented in synthesizable Verilog HDL using `defines.vh` macros for parameterized bit-field extraction. The module was verified using a 3-vector directed testbench in Cadence Xcelium. All three test cases passed. Waveform verified in Cadence SimVision. The Register File RTL is now in progress.
+> A synthesizable 32×32 Register File has been implemented in Verilog HDL with dual asynchronous read ports, a single synchronous write port, and synchronous active-high reset. The module was verified using a 4-test directed testbench in Cadence Xcelium. All 4 test cases passed. Waveform verified in Cadence SimVision.
+> **ALU implementation is next.**
 
 ---
 
 ## ✨ Features
 
 - Parameterized 32-bit instruction decoding using `defines.vh`
-- 32×32 Register File (32 registers × 32-bit width)
+- 32×32 Register File — dual async read, single sync write, sync reset
 - 32-bit ALU supporting 10 operations
 - Complete RTL-to-GDSII flow
 - Synthesis using Cadence Genus
@@ -54,33 +55,36 @@ Execution-Unit-RTL-to-GDSII/
 ├── rtl/
 │   ├── defines.vh                  ← Global macro definitions ✅
 │   ├── instruction_decoder.v       ← Instruction Decoder ✅
-│   ├── register_file.v             ← 32×32 Register File 🔄
-│   ├── alu.v                       ← 32-bit ALU ⏳
+│   ├── register_file.v             ← 32×32 Register File ✅
+│   ├── alu.v                       ← 32-bit ALU 🔄
 │   └── execution_unit_top.v        ← Top Module ⏳
 │
 ├── tb/
-│   └── tb_instruction_decoder.v    ← Instruction Decoder Testbench ✅
+│   ├── tb_instruction_decoder.v    ← Instruction Decoder Testbench ✅
+│   └── register_file_tb.v         ← Register File Testbench ✅
 │
 ├── images/
 │   └── simulation/
-│         └── instruction_decoder_waveform.png ← Verified waveform ✅
+│         ├── instruction_decoder_waveform.png ← Verified ✅
+│         └── register_file_waveform.png       ← Verified ✅
 │
 ├── constraints/
-│   └── execution_unit.sdc          ← Timing Constraints
+│   └── execution_unit.sdc
 │
 ├── scripts/
-│   ├── genus.tcl                   ← Synthesis Script
-│   └── innovus.tcl                 ← Physical Design Script
+│   ├── genus.tcl
+│   └── innovus.tcl
 │
-├── genus/                          ← Genus output files
-├── innovus/                        ← Innovus output files
-├── reports/                        ← Timing, Power, Area reports
+├── genus/
+├── innovus/
+├── reports/
 ├── docs/
 │   ├── Project_Plan.md
 │   ├── Architecture.md
 │   ├── Instruction_Set.md
 │   ├── Progress_Log.md
-│   └── Day02_Update.md
+│   ├── Day02_Update.md
+│   └── Day03_Update.md
 │
 ├── README.md
 ├── LICENSE
@@ -108,19 +112,18 @@ Execution-Unit-RTL-to-GDSII/
 |-------|--------|
 | Architecture Planning | ✅ Complete |
 | Repository Initialization | ✅ Complete |
-| Folder Structure | ✅ Complete |
-| Project Specification | ✅ Complete |
 | defines.vh | ✅ Complete |
 | Instruction Decoder RTL | ✅ Complete |
 | Instruction Decoder Verification | ✅ Complete |
-| Register File RTL | 🔄 In Progress |
-| ALU RTL | ⏳ Upcoming |
-| Top Module | ⏳ Upcoming |
-| Full Verification / Testbench | ⏳ Upcoming |
-| Synthesis (Genus) | ⏳ Upcoming |
-| Physical Design (Innovus) | ⏳ Upcoming |
-| STA & Timing Closure | ⏳ Upcoming |
-| GDSII | ⏳ Upcoming |
+| Register File RTL | ✅ Complete |
+| Register File Verification | ✅ Complete |
+| ALU RTL | 🔄 Next Module |
+| Top Module | ⏳ Pending |
+| Full Verification | 🔄 In Progress |
+| Synthesis (Genus) | ⏳ Pending |
+| Physical Design (Innovus) | ⏳ Pending |
+| STA & Timing Closure | ⏳ Pending |
+| GDSII | ⏳ Pending |
 
 ---
 
@@ -129,13 +132,14 @@ Execution-Unit-RTL-to-GDSII/
 ```
 Phase 1 — RTL Design
   ├── defines.vh                ✅ Complete
-  ├── instruction_decoder.v     ✅ Complete — 3/3 test cases passed
-  ├── register_file.v           🔄 In Progress
-  ├── alu.v                     ⏳ Upcoming
-  └── execution_unit_top.v      ⏳ Upcoming
+  ├── instruction_decoder.v     ✅ Complete — 3/3 tests passed
+  ├── register_file.v           ✅ Complete — 4/4 tests passed
+  ├── alu.v                     🔄 Next Module
+  └── execution_unit_top.v      ⏳ Pending
 
 Phase 2 — Verification
   ├── tb_instruction_decoder.v  ✅ Complete
+  ├── register_file_tb.v        ✅ Complete
   └── tb_execution_unit.v       ⏳ Upcoming
 
 Phase 3 — Synthesis (Cadence Genus)
@@ -163,15 +167,24 @@ Phase 5 — Signoff
 
 ![Instruction Decoder Waveform](images/simulation/instruction_decoder_waveform.png)
 
-> **Cadence SimVision** — Waveform showing `instruction[31:0]`, `opcode[3:0]`, `rd[4:0]`, `rs1[4:0]`, `rs2[4:0]` across 3 directed test vectors.
-> All output fields track input bit-fields with zero propagation delay — confirming purely combinational behavior.
-> **All 3 test cases passed.**
+> **Cadence SimVision** — Waveform showing `instruction[31:0]`, `opcode[3:0]`, `rd[4:0]`, `rs1[4:0]`, `rs2[4:0]` across 3 directed test vectors. All outputs track input bit-fields with zero propagation delay — confirming purely combinational behavior. **All 3 test cases passed.**
 
-| Test Case | instruction | opcode | rd | rs1 | rs2 | Result |
-|-----------|-------------|--------|-----|-----|-----|--------|
-| TC1 | 32'b0001_00010_00011_00100_... | 0001 | 00010 | 00011 | 00100 | ✅ PASSED |
-| TC2 | 32'b0010_00101_00110_00111_... | 0010 | 00101 | 00110 | 00111 | ✅ PASSED |
-| TC3 | 32'b1111_11111_11110_11101_... | 1111 | 11111 | 11110 | 11101 | ✅ PASSED |
+---
+
+### Register File
+
+![Register File Waveform](images/simulation/register_file_waveform.png)
+
+> **Cadence SimVision** — Waveform showing `clk`, `rst`, `we`, `write_addr[4:0]`, `write_data[31:0]`, `read_addr1[4:0]`, `read_addr2[4:0]`, `read_data1[31:0]`, `read_data2[31:0]`, `register_file[5]` and `register_file[10]` across 4 directed test cases.
+
+| Test | Description | Result |
+|------|-------------|--------|
+| TEST1 | Write `0xAAAAAAAA` to R5 → Read R5 | ✅ PASSED |
+| TEST2 | Write `0x55555555` to R10 → Read R10 | ✅ PASSED |
+| TEST3 | Simultaneous dual-port read R5 & R10 | ✅ PASSED |
+| TEST4 | Write disabled (we=0) — R5 unchanged | ✅ PASSED |
+
+**All 4 test cases passed.**
 
 ---
 
