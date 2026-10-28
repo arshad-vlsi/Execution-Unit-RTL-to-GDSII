@@ -39,29 +39,54 @@
   - Parameterized using `defines.vh` macros
   - Extracts opcode, rd, rs1, rs2 from 32-bit instruction
 - Directed testbench implemented (`tb/tb_instruction_decoder.v`)
-  - 3 test vectors covering normal, boundary and max-value cases
-  - Self-checking with `$display` pass/fail messages
+  - 3 test vectors — self-checking with pass/fail display
 - Functional simulation completed using Cadence Xcelium
 - Waveform verified in Cadence SimVision
 - **All 3 test cases passed** ✅
-- Simulation waveform screenshot captured and added to repository
 - Day 2 documentation written (`docs/Day02_Update.md`)
-- README updated — waveform embedded, project status updated
-- Architecture.md updated — Instruction Decoder marked complete
-- Ready to begin Register File RTL
+- README and Architecture.md updated
 
 ### 🎯 Next Goal
 
 - Register File RTL (`rtl/register_file.v`)
-  - 32 registers × 32-bit wide (32×32)
-  - Dual synchronous read ports (rs1, rs2)
-  - Single synchronous write port (rd)
-  - Active-high synchronous reset
-  - Verification using directed testbench in Cadence Xcelium
 
 ---
 
 ## Day 3
+
+**Date:** Oct 28 2026
+
+### ✅ Work Completed
+
+- Register File RTL implemented (`rtl/register_file.v`)
+  - 32 registers × 32-bit wide (32×32)
+  - Synchronous active-high reset — clears all 32 registers
+  - Synchronous write port — positive edge triggered with write enable
+  - Dual asynchronous read ports — immediate combinational output
+  - Write enable (`we`) logic — prevents unintended register updates
+- Register File testbench implemented (`tb/register_file_tb.v`)
+  - 4 directed self-checking test cases
+  - Covers: reset, write, read, dual-port read, write-disable
+- Functional simulation completed using Cadence Xcelium
+- Waveform verified in Cadence SimVision
+- **All 4 test cases passed** ✅
+- Waveform screenshot added to `images/simulation/`
+- Day 3 documentation written (`docs/Day03_Update.md`)
+- README updated — waveform embedded, project status updated
+- Architecture.md updated — Register File marked complete
+- Ready to begin ALU RTL
+
+### 🎯 Next Goal
+
+- ALU RTL (`rtl/alu.v`)
+  - 32-bit arithmetic and logic unit
+  - 10 operations: ADD, SUB, AND, OR, XOR, NOT, SLL, SRL, SLT, PASS
+  - 4-bit opcode selection from Instruction Decoder
+  - Verification using directed testbench in Cadence Xcelium
+
+---
+
+## Day 4
 
 **Date:** *(To be filled)*
 
