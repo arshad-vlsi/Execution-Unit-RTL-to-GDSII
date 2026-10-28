@@ -7,9 +7,9 @@ This document describes the high-level architecture of the 32-bit Processor Exec
 | Module | Description | Status |
 |--------|-------------|--------|
 | Instruction Decoder | Decodes 32-bit instruction into control signals | ✅ Complete |
-| Register File | 32×32 Register File storing operands and results | 🔄 In Progress |
-| ALU | 32-bit Arithmetic and Logic Unit | ⏳ Upcoming |
-| Top Module | Integrates all sub-modules | ⏳ Upcoming |
+| Register File | 32×32 Register File storing operands and results | ✅ Complete |
+| ALU | 32-bit Arithmetic and Logic Unit | 🔄 Next Module |
+| Top Module | Integrates all sub-modules | ⏳ Pending |
 
 ---
 
@@ -28,8 +28,10 @@ This document describes the high-level architecture of the 32-bit Processor Exec
                     │      │      │
                     ▼      ▼      ▼
               +----------------------+
-              |   Register File      |  🔄 In Progress
-              |      32 × 32         |
+              |   Register File      |  ✅ Complete
+              |   32 × 32            |
+              | sync write           |
+              | async read           |
               +----------------------+
                   │            │
                   │            │
@@ -39,7 +41,7 @@ This document describes the high-level architecture of the 32-bit Processor Exec
                      \      /
                       ▼    ▼
                   +------------+
-                  |    ALU     |  ⏳ Upcoming
+                  |    ALU     |  🔄 Next Module
                   +------------+
                         │
                    ALU Result
@@ -60,38 +62,45 @@ This document describes the high-level architecture of the 32-bit Processor Exec
 - Extracts **rd** (bits 27:23) — 5-bit destination register address
 - Extracts **rs1** (bits 22:18) — 5-bit source register 1 address
 - Extracts **rs2** (bits 17:13) — 5-bit source register 2 address
-- Purely **combinational** — implemented using `assign` statements
-- **Parameterized** using `defines.vh` macros
-- **Verified** — 3/3 test cases passed in Cadence Xcelium / SimVision
+- Purely **combinational** — `assign` statements
+- Parameterized using `defines.vh` macros
+- **Verified** — 3/3 test cases passed
 
 ---
 
-### 2. Register File 🔄 In Progress
+### 2. Register File ✅ Complete — Verified
 
-- Contains **32 registers**, each **32 bits wide** (32×32)
-- Supports **two simultaneous read ports** (rs1, rs2)
-- Supports **one write port** (rd)
-- Reads operands and provides them to the ALU
-- Writes ALU result back on completion
+- **32 registers × 32-bit wide** (32×32)
+- **Synchronous active-high reset** — all registers cleared on posedge clk with rst=1
+- **Synchronous write** — data written on posedge clk with we=1
+- **Dual asynchronous read ports** — immediate combinational read output
+- **Write enable** (`we`) — protects registers from unintended writes
+- **Verified** — 4/4 test cases passed:
+  - ✅ Reset initialization
+  - ✅ Register write
+  - ✅ Register read
+  - ✅ Dual-port simultaneous read
+  - ✅ Write disable verification
 
 ---
 
-### 3. ALU ⏳ Upcoming
+### 3. ALU 🔄 Next Module
 
 - Receives **Operand A** and **Operand B** from Register File
 - Performs operation based on **opcode** from Instruction Decoder
-- Supports **10 operations** — see Instruction_Set.md
+- Supports **10 operations**: ADD, SUB, AND, OR, XOR, NOT, SLL, SRL, SLT, PASS
 - Outputs **32-bit ALU Result**
+- Result written back to Register File via `rd`
 
 ---
 
-### 4. Top Module ⏳ Upcoming
+### 4. Top Module ⏳ Pending
 
 ```
 execution_unit_top
     ├── instruction_decoder   ✅ Complete
-    ├── register_file         🔄 In Progress
-    └── alu                   ⏳ Upcoming
+    ├── register_file         ✅ Complete
+    └── alu                   🔄 Next Module
 ```
 
 ---
@@ -111,4 +120,4 @@ execution_unit_top
 
 *For instruction encoding details see [Instruction_Set.md](Instruction_Set.md)*
 *For project progress see [Progress_Log.md](Progress_Log.md)*
-*For Day 2 details see [Day02_Update.md](Day02_Update.md)*
+*For Day 3 details see [Day03_Update.md](Day03_Update.md)*
