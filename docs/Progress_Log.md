@@ -74,19 +74,46 @@
 - Day 3 documentation written (`docs/Day03_Update.md`)
 - README updated — waveform embedded, project status updated
 - Architecture.md updated — Register File marked complete
-- Ready to begin ALU RTL
 
 ### 🎯 Next Goal
 
 - ALU RTL (`rtl/alu.v`)
-  - 32-bit arithmetic and logic unit
-  - 10 operations: ADD, SUB, AND, OR, XOR, NOT, SLL, SRL, SLT, PASS
-  - 4-bit opcode selection from Instruction Decoder
-  - Verification using directed testbench in Cadence Xcelium
 
 ---
 
 ## Day 4
+
+**Date:** *(To be filled)*
+
+### ✅ Work Completed
+
+- ALU RTL completed (`rtl/alu.v`)
+  - Purely combinational 32-bit ALU
+  - 10 operations: ADD, SUB, AND, OR, XOR, NOT, SLL, SRL, SLT, PASS A
+  - Zero flag generation
+  - Opcodes parameterized through `defines.vh`
+- ALU testbench completed (`tb/alu_tb.v`)
+  - 11 directed self-checking tests — one per operation plus the zero flag
+- Functional verification completed using Cadence Xcelium
+- Waveform verified in Cadence SimVision
+- Zero flag verified
+- **All 11 checks passed** ✅
+- Waveform screenshot added to `images/simulation/alu_waveform.png`
+- Day 4 documentation written (`docs/Day04_Update.md`)
+- README updated — ALU waveform embedded, project status and progress tables updated
+- Architecture.md updated — ALU marked complete
+- Ready to integrate all RTL modules
+
+### 🎯 Next Goal
+
+- Execution Unit Top (`rtl/execution_unit_top.v`)
+  - Integrate Instruction Decoder, Register File and ALU
+  - Connect the ALU result to the Register File write-back path
+  - System-level testbench and verification in Cadence Xcelium
+
+---
+
+## Day 5
 
 **Date:** *(To be filled)*
 
