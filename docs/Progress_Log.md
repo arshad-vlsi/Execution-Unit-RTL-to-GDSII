@@ -63,7 +63,7 @@
   - Synchronous active-high reset — clears all 32 registers
   - Synchronous write port — positive edge triggered with write enable
   - Dual asynchronous read ports — immediate combinational output
-  - Write enable (`we`) logic — prevents unintended register updates
+  - Write enable logic — prevents unintended register updates
 - Register File testbench implemented (`tb/register_file_tb.v`)
   - 4 directed self-checking test cases
   - Covers: reset, write, read, dual-port read, write-disable
@@ -102,11 +102,10 @@
 - Day 4 documentation written (`docs/Day04_Update.md`)
 - README updated — ALU waveform embedded, project status and progress tables updated
 - Architecture.md updated — ALU marked complete
-- Ready to integrate all RTL modules
 
 ### 🎯 Next Goal
 
-- Execution Unit Top (`rtl/execution_unit_top.v`)
+- Execution Unit integration (`rtl/execution_unit.v`)
   - Integrate Instruction Decoder, Register File and ALU
   - Connect the ALU result to the Register File write-back path
   - System-level testbench and verification in Cadence Xcelium
@@ -114,6 +113,34 @@
 ---
 
 ## Day 5
+
+**Date:** Nov 4 2026
+
+### ✅ Work Completed
+
+- Execution Unit integration completed (`rtl/execution_unit.v`)
+  - Instantiates the Instruction Decoder, Register File (Version 2) and ALU
+  - Decoder `opcode` drives the ALU `alu_op`; `rs1` / `rs2` drive the Register File read addresses
+  - Write-back select logic chooses between the initialization path and the normal write-back path
+- Register initialization interface added — `init_write`, `init_addr`, `init_data`
+- Register File updated to Version 2 (`rtl/register_file.v`)
+- Execution Unit testbench completed (`tb/execution_unit_tb.v`)
+  - Initializes `R1 = 10` and `R2 = 20`, then executes `ADD R3, R1, R2` (`0x01844000`)
+- Functional verification completed using Cadence Xcelium / SimVision
+  - Register initialization, instruction decoding, register reads, operand forwarding to the ALU, ALU computation, write-back path and register update verified
+  - `R3 = 30`, zero flag = 0
+- Waveform screenshot added to `images/simulation/execution_unit_waveform.png`
+- Day 5 documentation written (`docs/Day05_Update.md`)
+- README, Architecture.md and `images/architecture.svg` updated
+
+### 🎯 Next Goal
+
+- RTL optimization
+- Synthesis with Cadence Genus — timing constraints and timing reports
+
+---
+
+## Day 6
 
 **Date:** *(To be filled)*
 
