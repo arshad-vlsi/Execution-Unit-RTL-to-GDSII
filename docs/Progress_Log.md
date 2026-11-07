@@ -135,12 +135,37 @@
 
 ### 🎯 Next Goal
 
-- RTL optimization
-- Synthesis with Cadence Genus — timing constraints and timing reports
+- Comprehensive functional verification of all ALU operations through the Execution Unit
 
 ---
 
 ## Day 6
+
+**Date:** *(To be filled)*
+
+### ✅ Work Completed
+
+- Comprehensive functional verification of the complete Execution Unit completed
+  - `tb/execution_unit_tb.v` updated to a 10-operation, self-checking testbench
+  - All ten ALU operations verified end to end: ADD, SUB, AND, OR, XOR, NOT, SHIFT LEFT, SHIFT RIGHT, SLT, PASS A
+  - Every instruction exercised through decode, register read, ALU execution, write-back and destination register update
+- Registers initialized through `init_write`, `init_addr`, `init_data`
+  - `R1 = 10`, `R2 = 20`, `R4 = 15`, `R5 = 3`, `R6 = 1`, `R7 = 16`, `R8 = 5`
+- Simulation run in Cadence Xcelium, waveforms viewed in Cadence SimVision
+- **Total tests: 10 · Passed: 10 · Failed: 0** ✅
+- Final SimVision waveform added to `images/simulation/execution_unit_all_operations_waveform.png`
+- Simulation transcript added to `reports/execution_unit_simulation_transcript.txt`
+- Day 6 documentation written (`docs/Day06_Update.md`)
+- README updated — verification, simulation, execution unit, progress, roadmap, folder structure and future work sections
+
+### 🎯 Next Goal
+
+- RTL optimization
+- Cadence Genus synthesis — timing constraints, timing, area and power analysis
+
+---
+
+## Day 7
 
 **Date:** *(To be filled)*
 
