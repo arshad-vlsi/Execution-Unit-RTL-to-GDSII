@@ -6,6 +6,7 @@
 ![Cadence Innovus](https://img.shields.io/badge/Cadence%20Innovus-e36209?style=flat-square)
 ![ASIC](https://img.shields.io/badge/ASIC%20Design-8957e5?style=flat-square)
 ![RTL](https://img.shields.io/badge/RTL%20Integration-Complete-2ea44f?style=flat-square)
+![Verification](https://img.shields.io/badge/Functional%20Verification-10%2F10%20Passed-2ea44f?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-square)
 
 RTL-to-GDSII implementation of a 32-bit Processor Execution Unit (Instruction Decoder + Register File + ALU) using Verilog HDL, Cadence Xcelium, Cadence Genus and Cadence Innovus.
@@ -16,7 +17,7 @@ RTL-to-GDSII implementation of a 32-bit Processor Execution Unit (Instruction De
 
 This project demonstrates the complete **RTL-to-GDSII implementation flow** of a processor execution unit. Starting from a 32-bit instruction, the design decodes the instruction, reads operands from a 32×32 Register File, performs an arithmetic or logical operation in the ALU, and writes the result back to the destination register.
 
-**Current stage:** the Instruction Decoder, Register File (Version 2) and ALU are integrated in a single `execution_unit` top module with a register-initialization interface, and the integrated datapath has been functionally verified in Cadence Xcelium / SimVision. The next phases are RTL optimization and synthesis with Cadence Genus.
+**Current stage:** the Instruction Decoder, Register File (Version 2) and ALU are integrated in the `execution_unit` top module and the complete datapath has been functionally verified. All ten supported ALU operations pass end to end in Cadence Xcelium / SimVision (10 of 10). The next phases are RTL optimization and synthesis with Cadence Genus.
 
 The entire flow — from RTL design through synthesis, physical design, and timing closure — is implemented using industry-standard Cadence EDA tools on Linux.
 
@@ -33,37 +34,39 @@ The entire flow — from RTL design through synthesis, physical design, and timi
 | [Day 2 Update](docs/Day02_Update.md) | Instruction Decoder RTL and verification |
 | [Day 3 Update](docs/Day03_Update.md) | Register File RTL and verification |
 | [Day 4 Update](docs/Day04_Update.md) | ALU RTL and verification |
-| [Day 5 Update](docs/Day05_Update.md) | Execution Unit integration and functional verification |
+| [Day 5 Update](docs/Day05_Update.md) | Execution Unit integration and first datapath run |
+| [Day 6 Update](docs/Day06_Update.md) | Comprehensive functional verification of all ALU operations |
 
 ---
 
 ## 🆕 Current Progress
 
-### Day 5 Progress — Execution Unit Integration & Functional Verification
+### Day 6 Progress — Comprehensive Functional Verification
 
-Integrated the complete execution unit and verified the full datapath in Cadence Xcelium / SimVision.
+Completed comprehensive functional verification of the complete Execution Unit (Instruction Decoder, Register File, ALU and top module).
 
-- Integrated **Instruction Decoder**, **Register File (Version 2)**, **ALU** and the write-back path in the `execution_unit` top module
-- Added a **register-initialization interface** (`init_write`, `init_addr`, `init_data`) so registers can be preloaded before instruction execution, which makes verification easier and more realistic
-- Verified: register initialization, instruction decoding, register reads, operand forwarding to the ALU, ALU computation, write-back path and register update
+- Verified **all 10 supported ALU operations** end to end
+- Every instruction was exercised through: Instruction → Instruction Decoder → Register File read → ALU execution → Write-back → Destination register updated
+- Registers were preloaded through the initialization interface (`init_write`, `init_addr`, `init_data`)
+- The testbench is self-checking: it compares the expected and actual ALU result for each test and prints a PASS / FAIL summary
 
-**Verification example**
-
-| Step | Value |
-|------|-------|
-| Initial state | `R1 = 10`, `R2 = 20` |
-| Instruction | `ADD R3, R1, R2` (`0x01844000`) |
-| Operand A / Operand B | `10` / `20` |
-| ALU result | `30` |
-| Write-back | `R3 = 30` |
-| Zero flag | `0` |
+| Metric | Result |
+|--------|--------|
+| Total operations verified | 10 |
+| Passed | 10 |
+| Failed | 0 |
+| Simulator | Cadence Xcelium |
+| Waveform viewer | Cadence SimVision |
+| Status | ✅ Functional verification completed successfully |
 
 **Next:** RTL optimization, then synthesis with Cadence Genus.
 
 <details>
 <summary>Previous progress</summary>
 
-**Day 4 — ALU RTL Complete.** Synthesizable 32-bit combinational ALU with 10 operations (ADD, SUB, AND, OR, XOR, NOT, SLL, SRL, SLT, PASS A) and a zero flag. All 11 directed checks passed.
+**Day 5 — Execution Unit Integration.** Integrated the Instruction Decoder, Register File (Version 2) and ALU in `execution_unit`, added the register-initialization interface and verified a first instruction (`ADD R3, R1, R2`) through the full datapath.
+
+**Day 4 — ALU RTL Complete.** Synthesizable 32-bit combinational ALU with 10 operations and a zero flag. All 11 directed checks passed.
 
 **Day 3 — Register File RTL Complete.** Synthesizable 32×32 Register File with dual asynchronous read ports, a single synchronous write port and synchronous active-high reset. All 4 directed tests passed.
 
@@ -80,6 +83,7 @@ Integrated the complete execution unit and verified the full datapath in Cadence
 - 32-bit ALU with 10 operations and zero flag
 - Integrated `execution_unit` top module with write-back path
 - Register-initialization interface for simulation and verification
+- Self-checking system-level testbench covering all 10 ALU operations
 - Complete RTL-to-GDSII flow
 - Synthesis using Cadence Genus
 - Physical Design using Cadence Innovus
@@ -92,12 +96,12 @@ Integrated the complete execution unit and verified the full datapath in Cadence
 
 ![Architecture Diagram](images/architecture.svg)
 
-| Block | Status |
-|-------|--------|
-| Instruction Decoder | ✅ Complete |
-| Register File (Version 2) | ✅ Complete |
-| ALU | ✅ Complete |
-| Execution Unit (top) | ✅ Complete |
+| Block | Status | Verification |
+|-------|--------|--------------|
+| Instruction Decoder | ✅ Complete | 3/3 module tests |
+| Register File (Version 2) | ✅ Complete | 4/4 module tests (Day 3) · used in all 10 integrated tests |
+| ALU | ✅ Complete | 11/11 module checks |
+| Execution Unit (top) | ✅ Complete | ✅ 10/10 operations verified end to end |
 
 **Data flow**
 
@@ -105,7 +109,9 @@ Integrated the complete execution unit and verified the full datapath in Cadence
 Instruction → Instruction Decoder → Register File (read) → ALU → Write-Back → Destination Register
 ```
 
-**`execution_unit` interface**
+### Execution Unit
+
+`execution_unit` instantiates the decoder, register file and ALU and adds a write-back select that shares the Register File's single write port between normal write-back and register initialization. All ten ALU operations have been verified through this integrated datapath (see [Functional Verification](#-functional-verification)).
 
 | Port | Direction | Width | Description |
 |------|-----------|-------|-------------|
@@ -139,26 +145,28 @@ Execution-Unit-RTL-to-GDSII/
 │   ├── tb_instruction_decoder.v    ← Instruction Decoder Testbench ✅
 │   ├── register_file_tb.v          ← Register File Testbench ✅
 │   ├── alu_tb.v                    ← ALU Testbench ✅
-│   └── execution_unit_tb.v         ← Execution Unit Testbench ✅
+│   └── execution_unit_tb.v         ← Execution Unit Testbench — 10-operation, self-checking ✅
 │
 ├── images/
 │   ├── architecture.svg
 │   └── simulation/
-│         ├── instruction_decoder_waveform.png  ← Verified ✅
-│         ├── register_file_waveform.png        ← Verified ✅
-│         ├── alu_waveform.png                  ← Verified ✅
-│         └── execution_unit_waveform.png       ← Verified ✅
+│         ├── instruction_decoder_waveform.png              ← Verified ✅
+│         ├── register_file_waveform.png                    ← Verified ✅
+│         ├── alu_waveform.png                              ← Verified ✅
+│         ├── execution_unit_waveform.png                   ← Day 5 first datapath run ✅
+│         └── execution_unit_all_operations_waveform.png    ← Day 6 all 10 operations ✅
 │
 ├── constraints/
-│   └── execution_unit.sdc
+│   └── execution_unit.sdc          ← ⏳ Planned
 │
 ├── scripts/
-│   ├── genus.tcl
-│   └── innovus.tcl
+│   ├── genus.tcl                   ← ⏳ Planned
+│   └── innovus.tcl                 ← ⏳ Planned
 │
 ├── genus/
 ├── innovus/
 ├── reports/
+│   └── execution_unit_simulation_transcript.txt   ← Day 6 simulation transcript ✅
 ├── docs/
 │   ├── Project_Plan.md
 │   ├── Architecture.md
@@ -167,7 +175,8 @@ Execution-Unit-RTL-to-GDSII/
 │   ├── Day02_Update.md
 │   ├── Day03_Update.md
 │   ├── Day04_Update.md
-│   └── Day05_Update.md
+│   ├── Day05_Update.md
+│   └── Day06_Update.md
 │
 ├── README.md
 ├── LICENSE
@@ -189,7 +198,7 @@ Execution-Unit-RTL-to-GDSII/
 
 ---
 
-## 🚦 Project Status
+## 🚦 Project Progress
 
 | Milestone | Status |
 |-----------|--------|
@@ -199,12 +208,13 @@ Execution-Unit-RTL-to-GDSII/
 | Register File (Version 2) | ✅ Complete |
 | ALU | ✅ Complete |
 | Execution Unit Integration | ✅ Complete |
-| Functional Verification | ✅ Complete |
+| Functional Verification | ✅ Complete — 10/10 operations passed |
 | RTL Optimization | 🔜 Next |
-| Synthesis (Cadence Genus) | ⏳ Pending |
-| Timing Constraints | ⏳ Pending |
-| Timing Reports | ⏳ Pending |
-| Physical Design (Innovus) | ⏳ Pending |
+| Cadence Genus Synthesis | ⏳ Pending |
+| Timing Analysis | ⏳ Pending |
+| Area Analysis | ⏳ Pending |
+| Power Analysis | ⏳ Pending |
+| Cadence Innovus Physical Design | ⏳ Pending |
 | Physical Verification | ⏳ Pending |
 | GDSII Generation | ⏳ Pending |
 
@@ -220,10 +230,11 @@ Execution-Unit-RTL-to-GDSII/
 - [x] Execution Unit Integration
 - [x] Functional Verification
 - [ ] RTL Optimization
-- [ ] Synthesis (Cadence Genus)
-- [ ] Timing Constraints
-- [ ] Timing Reports
-- [ ] Physical Design (Innovus)
+- [ ] Cadence Genus Synthesis
+- [ ] Timing Analysis
+- [ ] Area Analysis
+- [ ] Power Analysis
+- [ ] Cadence Innovus Physical Design
 - [ ] Floorplanning
 - [ ] Placement
 - [ ] Clock Tree Synthesis
@@ -276,42 +287,166 @@ Execution-Unit-RTL-to-GDSII/
 
 ## 🔬 Functional Verification
 
-### Execution Unit — Integrated Datapath
+### Execution Unit — All ALU Operations
 
-![Execution Unit Waveform](images/simulation/execution_unit_waveform.png)
+The complete Execution Unit was verified with a self-checking testbench in **Cadence Xcelium**, with waveforms inspected in **Cadence SimVision**. After reset, the testbench preloads registers through the initialization interface and then runs one instruction for each ALU operation.
 
-*Cadence SimVision — complete execution-unit run (0–90 ns): initialization, `ADD R3, R1, R2` execution and write-back.*
+**Initial register state**
 
-The testbench resets the design, preloads `R1 = 10` and `R2 = 20` through the initialization interface, then executes `ADD R3, R1, R2`. Each stage is visible in the waveform:
+| Register | Value |
+|----------|-------|
+| R1 | 10 |
+| R2 | 20 |
+| R4 | 15 |
+| R5 | 3 |
+| R6 | 1 |
+| R7 | 16 |
+| R8 | 5 |
 
-1. **Register Initialization (0–50 ns).** `rst` is high for the first 20 ns and the registers read `0` from the first rising clock edge at 5 ns. With `init_write` high from 20 to 40 ns, the write-back select routes `init_addr` / `init_data` to the Register File: `registers[1]` becomes `10` at the 25 ns edge and `registers[2]` becomes `20` at the 35 ns edge.
-2. **Instruction Decode (50 ns).** The instruction `0x01844000` is applied. The decoder splits it into `opcode = 0000` (ADD), `rd = 00011` (R3), `rs1 = 00001` (R1) and `rs2 = 00010` (R2).
-3. **Register Read (50 ns).** `rs1` and `rs2` drive `read_addr1` / `read_addr2`, and `read_data1 = 10`, `read_data2 = 20` appear in the same time step as the new addresses, since the read ports are asynchronous.
-4. **ALU Operation (50 ns).** `operand_a = 10` and `operand_b = 20` reach the ALU with `alu_op = 0000`, giving `alu_result = 30`. The `zero` flag is `0`.
-5. **Write Back (50–70 ns).** `reg_write` is asserted, `init_write` is low, so the select logic drives `write_addr = 3` (`rd`) and `write_data = 30` (`alu_result`).
-6. **Register Update (55 ns).** At the next rising clock edge `registers[3]` changes to `30`, completing the instruction.
+**Path exercised by every instruction**
 
-| Check | Observed in waveform |
-|-------|----------------------|
-| Register initialization | `registers[1] = 10`, `registers[2] = 20` |
-| Instruction decoding | `opcode = 0`, `rd = 3`, `rs1 = 1`, `rs2 = 2` |
-| Register reads | `read_data1 = 10`, `read_data2 = 20` |
-| Operand forwarding to ALU | `operand_a = 10`, `operand_b = 20` |
-| ALU computation | `alu_result = 30`, `zero = 0` |
-| Write-back path | `write_addr = 3`, `write_data = 30` |
-| Register update | `registers[3] = 30` |
+```
+Instruction → Instruction Decoder → Register File Read → ALU Execution → Write Back → Destination Register Updated
+```
 
-> The testbench is a directed test of one instruction (ADD) verified by waveform inspection and a final `$display` of the instruction, ALU result and zero flag. Full timeline and verification scope in [docs/Day05_Update.md](docs/Day05_Update.md).
+**Results**
+
+| Test | Operation | Expected ALU Result | Actual ALU Result | Result |
+|------|-----------|---------------------|-------------------|--------|
+| 1 | ADD | 30 | 30 | ✅ PASS |
+| 2 | SUB | 10 | 10 | ✅ PASS |
+| 3 | AND | 3 | 3 | ✅ PASS |
+| 4 | OR | 15 | 15 | ✅ PASS |
+| 5 | XOR | 12 | 12 | ✅ PASS |
+| 6 | NOT | `0xFFFFFFF0` | `0xFFFFFFF0` | ✅ PASS |
+| 7 | SHIFT LEFT | 8 | 8 | ✅ PASS |
+| 8 | SHIFT RIGHT | 2 | 2 | ✅ PASS |
+| 9 | SET LESS THAN (SLT) | 1 | 1 | ✅ PASS |
+| 10 | PASS A | 20 | 20 | ✅ PASS |
+
+**Total: 10 · Passed: 10 · Failed: 0**
+
+#### Final Waveform
+
+![Execution Unit — All Operations Waveform](images/simulation/execution_unit_all_operations_waveform.png)
+
+*Cadence SimVision — complete Execution Unit run covering all ten ALU operations. `alu_op` changes with each instruction and `alu_result` takes the expected value for each test in turn: `30`, `10`, `3`, `15`, `12`, `0xFFFFFFF0`, `8`, `2`, `1`, `20`.*
+
+#### Simulation Transcript
+
+```
+=========================================
+EXECUTION UNIT VERIFICATION SUMMARY
+=========================================
+Total Tests : 10
+Passed      : 10
+Failed      : 0
+STATUS : ALL TESTS PASSED
+=========================================
+```
+
+<details>
+<summary>Full simulation transcript</summary>
+
+```
+-----------------------------------------
+RESET COMPLETED
+-----------------------------------------
+-----------------------------------------
+REGISTER INITIALIZATION COMPLETED
+-----------------------------------------
+-----------------------------------------
+TEST 1 : ADD
+Expected ALU Result : 30
+Actual   ALU Result : 30
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 2 : SUB
+Expected ALU Result : 10
+Actual   ALU Result : 10
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 3 : AND
+Expected ALU Result : 3
+Actual   ALU Result : 3
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 4 : OR
+Expected ALU Result : 15
+Actual   ALU Result : 15
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 5 : XOR
+Expected ALU Result : 12
+Actual   ALU Result : 12
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 6 : NOT
+Expected ALU Result : FFFFFFF0
+Actual   ALU Result : fffffff0
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 7 : SHIFT LEFT
+Expected ALU Result : 8
+Actual   ALU Result : 8
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 8 : SHIFT RIGHT
+Expected ALU Result : 2
+Actual   ALU Result : 2
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 9 : SLT
+Expected ALU Result : 1
+Actual   ALU Result : 1
+RESULT : PASS
+-----------------------------------------
+-----------------------------------------
+TEST 10 : PASS A
+Expected ALU Result : 20
+Actual   ALU Result : 20
+RESULT : PASS
+-----------------------------------------
+
+=========================================
+EXECUTION UNIT VERIFICATION SUMMARY
+=========================================
+Total Tests : 10
+Passed      : 10
+Failed      : 0
+STATUS : ALL TESTS PASSED
+=========================================
+```
+
+The same transcript is saved in [reports/execution_unit_simulation_transcript.txt](reports/execution_unit_simulation_transcript.txt).
+
+</details>
+
+#### Datapath Bring-Up (Day 5)
+
+![Execution Unit Day 5 Waveform](images/simulation/execution_unit_waveform.png)
+
+*The first integrated run — initialization of R1 and R2, then `ADD R3, R1, R2` with `R3 = 30` — is explained stage by stage in [docs/Day05_Update.md](docs/Day05_Update.md).*
+
+> Test setup, scope and waveform notes in [docs/Day06_Update.md](docs/Day06_Update.md).
 
 ---
 
 ## 🔮 Future Work
 
 - **RTL optimization** ahead of synthesis
-- **Synthesis with Cadence Genus** — timing constraints, area / power / timing reports and gate-level netlist
-- **Physical design with Cadence Innovus** — floorplanning, placement, clock tree synthesis, routing, physical verification and GDSII generation
+- **Cadence Genus synthesis** — timing constraints, timing, area and power analysis, and gate-level netlist
+- **Cadence Innovus physical design** — floorplanning, placement, clock tree synthesis, routing, physical verification and GDSII generation
 - **Signoff** — static timing analysis and timing closure
-- **Wider system-level verification** — remaining opcodes and back-to-back instruction sequences through the integrated datapath, with self-checking comparisons
+- **Additional verification corners** — edge-case operand values, undefined opcodes and dependent instruction sequences, re-run after RTL optimization
 
 ---
 
