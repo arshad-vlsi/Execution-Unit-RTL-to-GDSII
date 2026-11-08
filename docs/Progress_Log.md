@@ -160,12 +160,43 @@
 
 ### 🎯 Next Goal
 
-- RTL optimization
-- Cadence Genus synthesis — timing constraints, timing, area and power analysis
+- Prepare the ASIC synthesis environment for Cadence Genus
 
 ---
 
 ## Day 7
+
+**Date:** *(To be filled)*
+
+### ✅ Work Completed
+
+- ASIC synthesis environment setup completed — **no synthesis was run**
+- Repository organized into a professional ASIC project structure
+  - `rtl/` — `defines.vh`, `instruction_decoder.v`, `register_file.v`, `alu.v`, `execution_unit.v`
+  - `tb/` — all four verification testbenches
+  - `constraints/` — timing constraints
+  - `synthesis/` — `scripts`, `reports`, `netlist`, `database`, `logs`
+- First SDC file created (`constraints/execution_unit.sdc`)
+  - Primary clock `clk`, 10 ns period (100 MHz)
+  - Input delay 2 ns on all inputs except `clk`
+  - Output delay 2 ns on all outputs
+- Automated Cadence Genus script created (`synthesis/scripts/run_genus.tcl`)
+  - Read library, read RTL, elaborate, read constraints, check design
+  - Generic synthesis, technology mapping, logic optimization
+  - Area, gate, timing and power reports, and gate-level netlist
+- Project configured for the 90 nm standard-cell library used in the laboratory
+- Day 7 documentation written (`docs/Day07_Update.md`)
+- README updated — ASIC Implementation section, synthesis preparation workflow, folder structure, badges and progress tracker
+
+### 🎯 Next Goal
+
+- First Cadence Genus synthesis run
+- Review timing, area and power reports
+- Save reports and gate-level netlist in `synthesis/`
+
+---
+
+## Day 8
 
 **Date:** *(To be filled)*
 
