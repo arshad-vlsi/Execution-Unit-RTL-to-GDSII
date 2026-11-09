@@ -202,6 +202,37 @@
 
 ### ✅ Work Completed
 
+- RTL synthesis of the complete Execution Unit completed using Cadence Genus
+  - Technology library: 90 nm standard-cell library (`slow.lib`), slow corner
+  - Top module: `execution_unit`
+  - RTL synthesized: `defines.vh`, `instruction_decoder.v`, `register_file.v`, `alu.v`, `execution_unit.v`
+- Timing constraints applied from `constraints/execution_unit.sdc` — 10 ns clock (100 MHz), input and output delays
+- Automated synthesis executed with `synthesis/scripts/run_genus.tcl`
+  - Read library, read RTL, elaborate, read constraints, check design
+  - Generic synthesis, technology mapping, logic optimization
+  - Reports and gate-level netlist generated
+- Gate-level netlist generated — `synthesis/netlist/execution_unit_syn.v`
+- Synthesis reports generated — `synthesis/reports/area.rpt`, `gates.rpt`, `timing.rpt`, `power.rpt`
+- **No synthesis errors encountered** ✅
+- Screenshots added to `images/synthesis/`: synthesis completion, gate-level schematic, generated reports and project directory
+- Day 8 documentation written (`docs/Day08_Update.md`)
+- README updated — RTL Synthesis section, ASIC Implementation status, folder structure, progress tracker and roadmap
+
+### 🎯 Next Goal
+
+- Area analysis (`area.rpt`)
+- Gate-level analysis (`gates.rpt` and the netlist)
+- Timing analysis (`timing.rpt`)
+- Power analysis (`power.rpt`)
+
+---
+
+## Day 9
+
+**Date:** *(To be filled)*
+
+### ✅ Work Completed
+
 *(To be updated)*
 
 ### 🎯 Next Goal
