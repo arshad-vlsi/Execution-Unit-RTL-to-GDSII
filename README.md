@@ -10,12 +10,12 @@
 
 ![RTL](https://img.shields.io/badge/RTL%20Integration-Complete-2ea44f?style=flat-square)
 ![Verification](https://img.shields.io/badge/Functional%20Verification-10%2F10%20Passed-2ea44f?style=flat-square)
-![Synthesis](https://img.shields.io/badge/Synthesis%20Environment-Ready-2ea44f?style=flat-square)
+![Synthesis](https://img.shields.io/badge/RTL%20Synthesis-Complete-2ea44f?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-square)
 
 RTL-to-GDSII implementation of a 32-bit Processor Execution Unit (Instruction Decoder + Register File + ALU) using Verilog HDL, Cadence Xcelium, Cadence Genus and Cadence Innovus.
 
-**[Overview](#-project-overview)** · **[Architecture](#-architecture)** · **[ASIC Implementation](#-asic-implementation)** · **[Progress](#-project-progress)** · **[Roadmap](#-project-roadmap)** · **[Verification](#-functional-verification)**
+**[Overview](#-project-overview)** · **[Architecture](#-architecture)** · **[ASIC Implementation](#-asic-implementation)** · **[RTL Synthesis](#-rtl-synthesis)** · **[Progress](#-project-progress)** · **[Roadmap](#-project-roadmap)** · **[Verification](#-functional-verification)**
 
 ---
 
@@ -23,7 +23,7 @@ RTL-to-GDSII implementation of a 32-bit Processor Execution Unit (Instruction De
 
 This project demonstrates the complete **RTL-to-GDSII implementation flow** of a processor execution unit. Starting from a 32-bit instruction, the design decodes the instruction, reads operands from a 32×32 Register File, performs an arithmetic or logical operation in the ALU, and writes the result back to the destination register.
 
-**Current stage:** the Instruction Decoder, Register File (Version 2) and ALU are integrated in the `execution_unit` top module and the complete datapath has been functionally verified. All ten supported ALU operations pass end to end in Cadence Xcelium / SimVision (10 of 10). The ASIC synthesis environment — timing constraints, Cadence Genus script and 90 nm library configuration — is now prepared. The next step is the first Cadence Genus synthesis run.
+**Current stage:** the Instruction Decoder, Register File (Version 2) and ALU are integrated in the `execution_unit` top module and the complete datapath has been functionally verified (10 of 10 ALU operations pass in Cadence Xcelium / SimVision). The RTL has now been **synthesized with Cadence Genus** on a 90 nm standard-cell library, producing a gate-level netlist and synthesis reports. The next phase is analysis of those reports, followed by physical design in Cadence Innovus.
 
 The entire flow — from RTL design through synthesis, physical design, and timing closure — is implemented using industry-standard Cadence EDA tools on Linux.
 
@@ -43,25 +43,28 @@ The entire flow — from RTL design through synthesis, physical design, and timi
 | [Day 5 Update](docs/Day05_Update.md) | Execution Unit integration and first datapath run |
 | [Day 6 Update](docs/Day06_Update.md) | Comprehensive functional verification of all ALU operations |
 | [Day 7 Update](docs/Day07_Update.md) | ASIC synthesis environment setup — SDC, Genus script and project organization |
+| [Day 8 Update](docs/Day08_Update.md) | RTL synthesis with Cadence Genus — gate-level netlist and reports |
 
 ---
 
 ## 🆕 Current Progress
 
-### Day 7 Progress — ASIC Synthesis Environment Setup
+### Day 8 Progress — RTL Synthesis with Cadence Genus
 
-Prepared the project for RTL synthesis with Cadence Genus. **No synthesis was run today.**
+Synthesized the complete Execution Unit RTL into a gate-level netlist using Cadence Genus and the 90 nm standard-cell library.
 
-- Organized the repository into a professional ASIC project structure (`rtl`, `tb`, `constraints`, `synthesis`)
-- Created the first SDC file, `constraints/execution_unit.sdc`: primary clock, input delay and output delay at 100 MHz
-- Created an automated Genus synthesis script, `synthesis/scripts/run_genus.tcl`
-- Configured the project for the 90 nm standard-cell library used in the laboratory
-- Added synthesis output directories for reports, netlist, database and logs
+- Synthesized the `execution_unit` top module with `defines.vh`, `instruction_decoder.v`, `register_file.v` and `alu.v`
+- Applied the timing constraints in `execution_unit.sdc` (100 MHz clock, input and output delays)
+- Ran the automated `run_genus.tcl` script: generic synthesis, technology mapping and logic optimization
+- Generated the gate-level netlist `execution_unit_syn.v` and the area, gates, timing and power reports
+- No synthesis errors were encountered
 
-**Next:** first Cadence Genus synthesis run, followed by timing, area and power analysis.
+**Next:** analysis of the synthesis reports — area, gate-level, timing and power.
 
 <details>
 <summary>Previous progress</summary>
+
+**Day 7 — ASIC Synthesis Environment Setup.** Organized the repository into a professional ASIC project structure, created the first SDC file (100 MHz clock with input and output delays) and the automated Genus script, and configured the 90 nm library.
 
 **Day 6 — Comprehensive Functional Verification.** Verified all 10 ALU operations end to end through the Execution Unit with a self-checking testbench. 10 of 10 tests passed in Cadence Xcelium.
 
@@ -86,8 +89,7 @@ Prepared the project for RTL synthesis with Cadence Genus. **No synthesis was ru
 - Register-initialization interface for simulation and verification
 - Self-checking system-level testbench covering all 10 ALU operations
 - SDC timing constraints (100 MHz) and automated Cadence Genus synthesis script
-- Complete RTL-to-GDSII flow
-- Synthesis using Cadence Genus
+- Gate-level netlist synthesized with Cadence Genus on a 90 nm standard-cell library
 - Physical Design using Cadence Innovus
 - Static Timing Analysis (STA)
 - Timing Closure
@@ -133,22 +135,24 @@ Instruction → Instruction Decoder → Register File (read) → ALU → Write-B
 
 ## 🏭 ASIC Implementation
 
-> **Status:** synthesis environment prepared on Day 7. Synthesis has **not** been run yet. Results will be added after the first Cadence Genus run.
+> **Status:** RTL synthesis completed on Day 8 — see [RTL Synthesis](#-rtl-synthesis). Detailed area, gate-level, timing and power analysis will follow in upcoming updates.
 
-### Planned ASIC Flow
+### ASIC Flow
 
 ```
 RTL                          ✅ Complete
   ↓
-Timing Constraints (SDC)     ✅ Ready
+Timing Constraints (SDC)     ✅ Complete
   ↓
-Cadence Genus                ✅ Script ready
+Cadence Genus                ✅ Complete
   ↓
-Synthesis                    ⏳ Pending
+Synthesis                    ✅ Complete
+  ↓
+Area Analysis                🔜 Next
+  ↓
+Gate-Level Analysis          ⏳ Pending
   ↓
 Timing Analysis              ⏳ Pending
-  ↓
-Area Analysis                ⏳ Pending
   ↓
 Power Analysis               ⏳ Pending
   ↓
@@ -166,6 +170,7 @@ GDSII                        ⏳ Pending
 | Tool | Cadence Genus |
 | Top module | `execution_unit` |
 | Technology library | 90 nm standard-cell library (`slow.lib`), provided by the laboratory |
+| Operating corner | slow |
 | Target clock | 100 MHz (10 ns period) |
 | Constraints | [`constraints/execution_unit.sdc`](constraints/execution_unit.sdc) |
 | Script | [`synthesis/scripts/run_genus.tcl`](synthesis/scripts/run_genus.tcl) |
@@ -194,7 +199,8 @@ set_output_delay 2 -clock clk [all_outputs]
 4. ✅ Write the Genus synthesis script (`synthesis/scripts/run_genus.tcl`)
 5. ✅ Configure the 90 nm technology library
 6. ✅ Create synthesis output directories (`reports`, `netlist`, `database`, `logs`)
-7. ⏳ Run synthesis and review timing, area and power
+7. ✅ Run synthesis (Day 8)
+8. ⏳ Analyze the area, gate-level, timing and power reports
 
 ### Genus Script Flow
 
@@ -211,17 +217,120 @@ set_output_delay 2 -clock clk [all_outputs]
 | 9 | `report area / gates / timing / power` | Generate reports |
 | 10 | `write_hdl` | Write the gate-level netlist |
 
-### Planned Synthesis Outputs
+> The technology library belongs to the laboratory environment and is not included in this repository. The script currently uses absolute paths from the lab workstation.
+
+---
+
+## 🔧 RTL Synthesis
+
+> **Status:** ✅ RTL successfully synthesized with Cadence Genus. No synthesis errors were encountered. Detailed area, gate, timing and power analysis will be documented in upcoming updates.
+
+### Synthesis Workflow
+
+```
+RTL Design                      rtl/ — defines.vh and four modules
+        ↓
+Read Technology Library         slow.lib — 90 nm, slow corner
+        ↓
+Read RTL Files
+        ↓
+Design Elaboration              top module: execution_unit
+        ↓
+Read Timing Constraints         execution_unit.sdc — 100 MHz
+        ↓
+Design Checking
+        ↓
+Generic Synthesis               syn_gen
+        ↓
+Technology Mapping              syn_map
+        ↓
+Logic Optimization              syn_opt
+        ↓
+Synthesis Reports               area, gates, timing, power
+        ↓
+Gate-Level Netlist              execution_unit_syn.v
+```
+
+### Cadence Genus Overview
+
+Cadence Genus is a logic synthesis tool. It translates RTL into a gate-level netlist built from the cells of a target standard-cell library, optimizing the result against the timing constraints. In this project it runs through a single automated script, `synthesis/scripts/run_genus.tcl`.
+
+| Stage | Command | What it does |
+|-------|---------|--------------|
+| Generic synthesis | `syn_gen` | Converts the elaborated RTL into generic logic, independent of any library |
+| Technology mapping | `syn_map` | Maps the generic logic onto the 90 nm standard cells |
+| Logic optimization | `syn_opt` | Optimizes the mapped netlist against the timing constraints |
+
+### Synthesis Configuration
+
+| Item | Configuration |
+|------|---------------|
+| Top module | `execution_unit` |
+| RTL synthesized | `defines.vh`, `instruction_decoder.v`, `register_file.v`, `alu.v`, `execution_unit.v` |
+| Technology library | 90 nm standard-cell library — `slow.lib` |
+| Operating corner | slow |
+| Constraints | `execution_unit.sdc` — 10 ns clock (100 MHz), input and output delays |
+| Script | `run_genus.tcl` |
+
+### Generated Outputs
 
 | Output | Location | Status |
 |--------|----------|--------|
-| Area report | `synthesis/reports/area.rpt` | ⏳ Pending |
-| Gate (cell count) report | `synthesis/reports/gates.rpt` | ⏳ Pending |
-| Timing report | `synthesis/reports/timing.rpt` | ⏳ Pending |
-| Power report | `synthesis/reports/power.rpt` | ⏳ Pending |
-| Gate-level netlist | `synthesis/netlist/execution_unit_syn.v` | ⏳ Pending |
+| Gate-level netlist | `synthesis/netlist/execution_unit_syn.v` | ✅ Generated |
+| Area report | `synthesis/reports/area.rpt` | ✅ Generated |
+| Gates report | `synthesis/reports/gates.rpt` | ✅ Generated |
+| Timing report | `synthesis/reports/timing.rpt` | ✅ Generated |
+| Power report | `synthesis/reports/power.rpt` | ✅ Generated |
 
-> The technology library belongs to the laboratory environment and is not included in this repository. The script currently uses absolute paths from the lab workstation.
+### Synthesis Status
+
+| Check | Status |
+|-------|--------|
+| RTL successfully synthesized | ✅ |
+| Technology mapping completed | ✅ |
+| Gate-level netlist generated | ✅ |
+| Reports generated | ✅ |
+| Synthesis errors | None encountered |
+
+### Synthesis Screenshots
+
+#### Synthesis Completion
+
+![Genus Synthesis Completion](images/synthesis/genus_synthesis_completion.png)
+
+*Cadence Genus — synthesis run completed for `execution_unit`.*
+
+#### Gate-Level Schematic
+
+![Gate-Level Schematic](images/synthesis/genus_gate_level_schematic.png)
+
+*Synthesized gate-level schematic of `execution_unit`, mapped to the 90 nm standard-cell library.*
+
+#### Generated Reports
+
+![Generated Synthesis Reports](images/synthesis/genus_synthesis_reports.png)
+
+*Synthesis reports generated in `synthesis/reports/`.*
+
+#### Project Directory After Synthesis
+
+![Project Directory After Synthesis](images/synthesis/project_directory_after_synthesis.png)
+
+*Project directory after synthesis, with the generated reports and netlist in `synthesis/`.*
+
+### Next Development Phase
+
+The synthesis outputs are ready for analysis. Each report will be reviewed and documented in an upcoming daily update, followed by physical design in Cadence Innovus.
+
+| Analysis | Source | Status |
+|----------|--------|--------|
+| Area Analysis | `synthesis/reports/area.rpt` | 🔜 Next |
+| Gate-Level Analysis | `synthesis/reports/gates.rpt` | ⏳ Pending |
+| Timing Analysis | `synthesis/reports/timing.rpt` | ⏳ Pending |
+| Power Analysis | `synthesis/reports/power.rpt` | ⏳ Pending |
+| Physical Design (Cadence Innovus) | `synthesis/netlist/execution_unit_syn.v` | ⏳ Pending |
+
+> Details and notes in [docs/Day08_Update.md](docs/Day08_Update.md).
 
 ---
 
@@ -249,19 +358,29 @@ Execution-Unit-RTL-to-GDSII/
 ├── synthesis/
 │   ├── scripts/
 │   │     └── run_genus.tcl         ← Cadence Genus synthesis script ✅
-│   ├── reports/                    ← area, gates, timing, power reports ⏳
-│   ├── netlist/                    ← execution_unit_syn.v ⏳
-│   ├── database/                   ← Genus database ⏳
-│   └── logs/                       ← Genus logs ⏳
+│   ├── reports/
+│   │     ├── area.rpt              ← Area report ✅
+│   │     ├── gates.rpt             ← Gates report ✅
+│   │     ├── timing.rpt            ← Timing report ✅
+│   │     └── power.rpt             ← Power report ✅
+│   ├── netlist/
+│   │     └── execution_unit_syn.v  ← Gate-level netlist ✅
+│   ├── database/                   ← Reserved for the Genus database
+│   └── logs/                       ← Reserved for Genus logs
 │
 ├── images/
 │   ├── architecture.svg
-│   └── simulation/
-│         ├── instruction_decoder_waveform.png              ← Verified ✅
-│         ├── register_file_waveform.png                    ← Verified ✅
-│         ├── alu_waveform.png                              ← Verified ✅
-│         ├── execution_unit_waveform.png                   ← Day 5 first datapath run ✅
-│         └── execution_unit_all_operations_waveform.png    ← Day 6 all 10 operations ✅
+│   ├── simulation/
+│   │     ├── instruction_decoder_waveform.png              ← Verified ✅
+│   │     ├── register_file_waveform.png                    ← Verified ✅
+│   │     ├── alu_waveform.png                              ← Verified ✅
+│   │     ├── execution_unit_waveform.png                   ← Day 5 first datapath run ✅
+│   │     └── execution_unit_all_operations_waveform.png    ← Day 6 all 10 operations ✅
+│   └── synthesis/
+│         ├── genus_synthesis_completion.png                ← Day 8 ✅
+│         ├── genus_gate_level_schematic.png                ← Day 8 ✅
+│         ├── genus_synthesis_reports.png                   ← Day 8 ✅
+│         └── project_directory_after_synthesis.png         ← Day 8 ✅
 │
 ├── reports/
 │   └── execution_unit_simulation_transcript.txt   ← Day 6 simulation transcript ✅
@@ -275,7 +394,8 @@ Execution-Unit-RTL-to-GDSII/
 │   ├── Day04_Update.md
 │   ├── Day05_Update.md
 │   ├── Day06_Update.md
-│   └── Day07_Update.md
+│   ├── Day07_Update.md
+│   └── Day08_Update.md
 │
 ├── README.md
 ├── LICENSE
@@ -293,6 +413,7 @@ Execution-Unit-RTL-to-GDSII/
 | Cadence SimVision | Waveform Viewer |
 | Synopsys Design Constraints (SDC) | Timing constraints |
 | Cadence Genus | Logic Synthesis |
+| 90 nm standard-cell library (`slow.lib`) | Target technology, slow corner |
 | Cadence Innovus | Physical Design (PnR) |
 | Linux | Operating System |
 
@@ -310,10 +431,12 @@ Execution-Unit-RTL-to-GDSII/
 | Execution Unit | ✅ Complete |
 | Functional Verification | ✅ Complete — 10/10 operations passed |
 | ASIC Synthesis Environment Setup | ✅ Complete |
-| RTL Synthesis | 🔜 Next |
+| RTL Synthesis (Cadence Genus) | ✅ Complete |
+| Area Analysis | 🔜 Next |
+| Gate-Level Analysis | ⏳ Pending |
 | Timing Analysis | ⏳ Pending |
-| Area Analysis | ⏳ Pending |
 | Power Analysis | ⏳ Pending |
+| Physical Design (Cadence Innovus) | ⏳ Pending |
 | Floorplanning | ⏳ Pending |
 | Placement | ⏳ Pending |
 | Clock Tree Synthesis | ⏳ Pending |
@@ -333,10 +456,12 @@ Execution-Unit-RTL-to-GDSII/
 - [x] Execution Unit
 - [x] Functional Verification
 - [x] ASIC Synthesis Environment Setup
-- [ ] RTL Synthesis
-- [ ] Timing Analysis
+- [x] RTL Synthesis (Cadence Genus)
 - [ ] Area Analysis
+- [ ] Gate-Level Analysis
+- [ ] Timing Analysis
 - [ ] Power Analysis
+- [ ] Physical Design (Cadence Innovus)
 - [ ] Floorplanning
 - [ ] Placement
 - [ ] Clock Tree Synthesis
@@ -544,7 +669,7 @@ The same transcript is saved in [reports/execution_unit_simulation_transcript.tx
 
 ## 🔮 Future Work
 
-- **RTL synthesis with Cadence Genus** — timing, area and power analysis and gate-level netlist
+- **Synthesis report analysis** — area, gate-level, timing and power
 - **Gate-level simulation** of the synthesized netlist
 - **Cadence Innovus physical design** — floorplanning, placement, clock tree synthesis, routing, physical verification and GDSII generation
 - **Signoff** — static timing analysis and timing closure
