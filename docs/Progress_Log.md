@@ -233,6 +233,37 @@
 
 ### ✅ Work Completed
 
+- Area analysis of the synthesized Execution Unit completed using the Cadence Genus area report (`synthesis/reports/area.rpt`)
+  - Top module: `execution_unit`
+  - Technology library: 90 nm standard-cell library, slow corner
+  - Wireload mode: enclosed · Operating condition: slow (balanced_tree)
+- Area results
+  - Cell Count: 5373 standard cells
+  - Cell Area: 38190.146 µm²
+  - Net Area: 0.000 µm²
+  - Total Area: 38190.146 µm²
+- Interpreted the report
+  - The RTL was mapped to 5373 standard-cell instances
+  - Net Area is zero because placement and routing have not been performed, so Total Area equals Cell Area
+- Synthesis completed without errors
+- Screenshots added to `images/synthesis/`: area report, synthesis summary, Genus Design Browser and area report terminal output
+- Day 9 documentation written (`docs/Day09_Update.md`)
+- README updated — Area Analysis section, ASIC flow, progress tracker, roadmap and folder structure
+
+### 🎯 Next Goal
+
+- Gate-level analysis (`gates.rpt` and the netlist)
+- Timing analysis (`timing.rpt`)
+- Power analysis (`power.rpt`)
+
+---
+
+## Day 10
+
+**Date:** *(To be filled)*
+
+### ✅ Work Completed
+
 *(To be updated)*
 
 ### 🎯 Next Goal
