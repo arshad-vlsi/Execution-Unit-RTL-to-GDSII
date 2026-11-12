@@ -113,12 +113,6 @@ The order follows `run_genus.tcl`: constraints are read after elaboration, and t
 
 ## Screenshots
 
-### Synthesis completion
-
-![Genus Synthesis Completion](../images/synthesis/genus_synthesis_completion.png)
-
-*Cadence Genus — synthesis run completed for `execution_unit`.*
-
 ### Gate-level schematic
 
 ![Gate-Level Schematic](../images/synthesis/genus_gate_level_schematic.png)
