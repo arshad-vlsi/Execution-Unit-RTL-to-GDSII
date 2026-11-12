@@ -246,7 +246,7 @@
   - The RTL was mapped to 5373 standard-cell instances
   - Net Area is zero because placement and routing have not been performed, so Total Area equals Cell Area
 - Synthesis completed without errors
-- Screenshots added to `images/synthesis/`: area report, synthesis summary, Genus Design Browser and area report terminal output
+- Area report screenshot added to `images/synthesis/genus_area_report.png`
 - Day 9 documentation written (`docs/Day09_Update.md`)
 - README updated — Area Analysis section, ASIC flow, progress tracker, roadmap and folder structure
 
