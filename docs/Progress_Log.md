@@ -214,7 +214,7 @@
 - Gate-level netlist generated — `synthesis/netlist/execution_unit_syn.v`
 - Synthesis reports generated — `synthesis/reports/area.rpt`, `gates.rpt`, `timing.rpt`, `power.rpt`
 - **No synthesis errors encountered** ✅
-- Screenshots added to `images/synthesis/`: gate-level schematic, generated reports and project directory
+- Gate-level schematic screenshot added to `images/synthesis/genus_gate_level_schematic.png`
 - Day 8 documentation written (`docs/Day08_Update.md`)
 - README updated — RTL Synthesis section, ASIC Implementation status, folder structure, progress tracker and roadmap
 
