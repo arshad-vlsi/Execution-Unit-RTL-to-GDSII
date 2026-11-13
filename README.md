@@ -297,25 +297,13 @@ Cadence Genus is a logic synthesis tool. It translates RTL into a gate-level net
 | Reports generated | ✅ |
 | Synthesis errors | None encountered |
 
-### Synthesis Screenshots
+### Synthesis Screenshot
 
 #### Gate-Level Schematic
 
 ![Gate-Level Schematic](images/synthesis/genus_gate_level_schematic.png)
 
 *Synthesized gate-level schematic of `execution_unit`, mapped to the 90 nm standard-cell library.*
-
-#### Generated Reports
-
-![Generated Synthesis Reports](images/synthesis/genus_synthesis_reports.png)
-
-*Synthesis reports generated in `synthesis/reports/`.*
-
-#### Project Directory After Synthesis
-
-![Project Directory After Synthesis](images/synthesis/project_directory_after_synthesis.png)
-
-*Project directory after synthesis, with the generated reports and netlist in `synthesis/`.*
 
 ### Next Development Phase
 
@@ -442,8 +430,6 @@ Execution-Unit-RTL-to-GDSII/
 │   │     └── execution_unit_all_operations_waveform.png    ← Day 6 all 10 operations ✅
 │   └── synthesis/
 │         ├── genus_gate_level_schematic.png                ← Day 8 ✅
-│         ├── genus_synthesis_reports.png                   ← Day 8 ✅
-│         ├── project_directory_after_synthesis.png         ← Day 8 ✅
 │         └── genus_area_report.png                         ← Day 9 ✅
 │
 ├── reports/
