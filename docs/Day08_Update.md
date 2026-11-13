@@ -119,18 +119,6 @@ The order follows `run_genus.tcl`: constraints are read after elaboration, and t
 
 *Synthesized gate-level schematic of `execution_unit`.*
 
-### Generated reports
-
-![Generated Synthesis Reports](../images/synthesis/genus_synthesis_reports.png)
-
-*Synthesis reports generated in `synthesis/reports/`.*
-
-### Project directory after synthesis
-
-![Project Directory After Synthesis](../images/synthesis/project_directory_after_synthesis.png)
-
-*Project directory after synthesis.*
-
 ---
 
 ## Not Covered Yet
