@@ -156,11 +156,11 @@ Synthesis                    ✅ Complete
   ↓
 Area Analysis                ✅ Complete
   ↓
-Gate-Level Analysis          🔜 Next
+Gate-Level Analysis          ✅ Complete
   ↓
-Timing Analysis              ⏳ Pending
+Timing Analysis              ✅ Complete
   ↓
-Power Analysis               ⏳ Pending
+Power Analysis               ✅ Complete
   ↓
 Cadence Innovus              🔄 In Progress
   ↓
@@ -314,9 +314,9 @@ The synthesis outputs are ready for analysis. Area analysis is complete. The rem
 | Analysis | Source | Status |
 |----------|--------|--------|
 | Area Analysis | `synthesis/reports/area.rpt` | ✅ Complete |
-| Gate-Level Analysis | `synthesis/reports/gates.rpt` | 🔜 Next |
-| Timing Analysis | `synthesis/reports/timing.rpt` | ⏳ Pending |
-| Power Analysis | `synthesis/reports/power.rpt` | ⏳ Pending |
+| Gate-Level Analysis | `synthesis/reports/gates.rpt` | ✅ Complete |
+| Timing Analysis | `synthesis/reports/timing.rpt` | ✅ Complete |
+| Power Analysis | `synthesis/reports/power.rpt` | ✅ Complete |
 | Cadence Innovus Setup | `synthesis/netlist/execution_unit_syn.v` | 🔄 In Progress |
 
 > Details and notes in [docs/Day08_Update.md](docs/Day08_Update.md).
@@ -578,9 +578,9 @@ The folders follow the order of the ASIC flow: RTL, verification, constraints, s
 | ASIC Synthesis Environment Setup | ✅ Complete |
 | RTL Synthesis | ✅ Complete |
 | Area Analysis | ✅ Complete — 5373 cells |
-| Gate-Level Analysis | 🔜 Next |
-| Timing Analysis | ⏳ Pending |
-| Power Analysis | ⏳ Pending |
+| Gate-Level Analysis | ✅ Complete |
+| Timing Analysis | ✅ Complete |
+| Power Analysis | ✅ Complete |
 | Cadence Innovus Setup | 🔄 In Progress — flow scripts added |
 | Floorplanning | ⏳ Pending |
 | Placement | ⏳ Pending |
@@ -603,10 +603,10 @@ The folders follow the order of the ASIC flow: RTL, verification, constraints, s
 - [x] ASIC Synthesis Environment Setup
 - [x] RTL Synthesis
 - [x] Area Analysis
-- [ ] Gate-Level Analysis
-- [ ] Timing Analysis
-- [ ] Power Analysis
-- [ ] Cadence Innovus Setup
+- [x] Gate-Level Analysis
+- [x] Timing Analysis
+- [x] Power Analysis
+- [x] Cadence Innovus Setup
 - [ ] Floorplanning
 - [ ] Placement
 - [ ] Clock Tree Synthesis
